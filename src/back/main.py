@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-import psutil, typing, json, time, datetime
+import psutil, typing, json, time, datetime, platform
 
 app = FastAPI()
 
@@ -68,9 +68,32 @@ def getUsers():
         users.append(user[0])
     return json.dumps(users)
 
+def getArchitecture():
+    return platform.architecture()[0]
+
+def getMachine():
+    return platform.machine()
+
+def getComputerNetworkName():
+    return platform.node()
+
+def getPlatform():
+    return platform.platform()
+    
+def getProcessorName():
+    return platform.processor()
+
+def getSystem():
+    return platform.system()
+
+def getVersion():
+    return platform.version()
+
 getCpuTimesPercents() #initilization
 
 time.sleep(1)
+
+print(getVersion())
 
 @app.get("/")
 async def root():
