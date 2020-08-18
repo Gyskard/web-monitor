@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-import psutil, typing, json, time, datetime, platform
+import psutil, typing, json, time, datetime, platform, socket
 
 app = FastAPI()
 
@@ -89,11 +89,17 @@ def getSystem():
 def getVersion():
     return platform.version()
 
+def getHostname():
+    return socket.gethostname()
+
+def getIp():
+    return socket.gethostbyname(socket.gethostname())
+
 getCpuTimesPercents() #initilization
 
 time.sleep(1)
 
-print(getVersion())
+print(getHostname())
 
 @app.get("/")
 async def root():
