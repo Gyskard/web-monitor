@@ -14,7 +14,7 @@ def getCpuTimesPercents():
     )
 
 def getCpuNumber():
-    return json.dumps({'logical': psutil.cpu_count(), 'physical': psutil.cpu_count(logical=False)})
+    return {'logical': psutil.cpu_count(), 'physical': psutil.cpu_count(logical=False)}
 
 def getCpuFrequence():
     return round(psutil.cpu_freq()[0])
@@ -71,10 +71,10 @@ def getUsers():
 def getArchitecture():
     return platform.architecture()[0]
 
-def getMachine():
+def getInstructionSet():
     return platform.machine()
 
-def getComputerNetworkName():
+def getNetworkName():
     return platform.node()
 
 def getPlatform():
@@ -99,8 +99,40 @@ getCpuTimesPercents() #initilization
 
 time.sleep(1)
 
-print(getHostname())
+# consistent value
+
+cpuNumber = getCpuNumber()
+architecture = getArchitecture()
+instructionSet = getInstructionSet()
+networkName = getNetworkName()
+theplatform = getPlatform()
+processorName = getProcessorName()
+system = getSystem()
+version = getVersion()
+hostname = getHostname()
+ip = getIp()
 
 @app.get("/")
 async def root():
     return "It works!"
+
+@app.get("/initilization")
+async def initilization():
+    return {
+        "processor": {
+            "name": processorName,
+            "cpuNumber": cpuNumber,
+            "instructionSet": instructionSet,
+        },
+        "os": {
+            "platform": theplatform,
+            "networkName": networkName,
+            "system": system,
+            "version": version,
+            "architecture": architecture,
+        },
+        "network": {
+            "hostname": hostname,
+            "ip": ip
+        }
+    }
