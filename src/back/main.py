@@ -1,17 +1,14 @@
 from fastapi import FastAPI
+from fastapi.testclient import TestClient
+from fastapi.websockets import WebSocket
+
 import psutil, typing, json, time, datetime, platform, socket
 
 app = FastAPI()
 
 def getCpuTimesPercents():
     cpuTimesPercent = psutil.cpu_times_percent()
-    return json.dumps(
-        {
-            'userTimePercent': cpuTimesPercent[0],
-            'systemTimePercent': cpuTimesPercent[1],
-            'idleTimePercent': cpuTimesPercent[2]
-        }
-    )
+    return {'userTimePercent': cpuTimesPercent[0], 'systemTimePercent': cpuTimesPercent[1], 'idleTimePercent': cpuTimesPercent[2]}
 
 def getCpuNumber():
     return {'logical': psutil.cpu_count(), 'physical': psutil.cpu_count(logical=False)}
@@ -22,7 +19,7 @@ def getCpuFrequence():
 def getMemory():
     virtualMemory = psutil.virtual_memory()
     swapMemory = psutil.swap_memory()
-    return json.dumps(
+    return(
         {
             'virtualMemory': {
                 'total': virtualMemory[0],
@@ -46,11 +43,11 @@ def getDiskUsage():
             'used': psutil.disk_usage(device[0])[1],
             'free': psutil.disk_usage(device[0])[2]
         }
-    return json.dumps(diskUsage)
+    return diskUsage
 
 def getNetworkUsage():
     networkUsage = psutil.net_io_counters()
-    return json.dumps(
+    return (
         {
             'bytesSent': networkUsage[0],
             'bytesReceive': networkUsage[1],
@@ -66,7 +63,7 @@ def getUsers():
     users = []
     for user in psutil.users():
         users.append(user[0])
-    return json.dumps(users)
+    return users
 
 def getArchitecture():
     return platform.architecture()[0]
@@ -109,6 +106,7 @@ theplatform = getPlatform()
 processorName = getProcessorName()
 system = getSystem()
 version = getVersion()
+bootTime = getBootTime()
 hostname = getHostname()
 ip = getIp()
 
@@ -116,7 +114,7 @@ ip = getIp()
 async def root():
     return "It works!"
 
-@app.get("/consistentValue")
+@app.get("/consistentvalue")
 async def initilization():
     return {
         "processor": {
@@ -130,9 +128,25 @@ async def initilization():
             "system": system,
             "version": version,
             "architecture": architecture,
+            "bootTime": bootTime
         },
         "network": {
             "hostname": hostname,
             "ip": ip
         }
     }
+
+@app.websocket("/dynamicvalue")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    while True:
+        await websocket.send_json({
+                "processor": {
+                    "cpuTimesPercents": getCpuTimesPercents(),
+                    "cpuFrequence": getCpuFrequence()
+                },
+                "memory": getMemory(),
+                "diskUsage": getDiskUsage(),
+                "networkUsage": getNetworkUsage(),
+                "users": getUsers()
+        })
