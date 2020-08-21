@@ -114,7 +114,7 @@ ip = getIp()
 async def root():
     return "It works!"
 
-@app.get("/consistentvalue")
+@app.get("/staticvalue")
 async def initilization():
     return {
         "processor": {
