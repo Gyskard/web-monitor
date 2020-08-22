@@ -18,7 +18,7 @@ Monitor computer performance from a web interface.
 git clone https://github.com/Gyskard/web-monitor
 cd ./web-monitor/src/back
 pip install -r requirements.txt
-npm run serve
+uvicorn main:app --reload
 ```
 
 ### technologies
