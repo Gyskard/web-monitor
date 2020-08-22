@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from fastapi.websockets import WebSocket
 
-import psutil, typing, json, time, datetime, platform, socket
+import psutil, typing, json, time, datetime, platform, socket, asyncio
 
 app = FastAPI()
 
@@ -140,6 +140,7 @@ async def initilization():
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     while True:
+        await asyncio.sleep(1)
         await websocket.send_json({
                 "processor": {
                     "cpuTimesPercents": getCpuTimesPercents(),
