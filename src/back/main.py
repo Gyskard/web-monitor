@@ -1,14 +1,25 @@
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from fastapi.websockets import WebSocket
+from fastapi.middleware.cors import CORSMiddleware
 
 import psutil, typing, json, time, datetime, platform, socket, asyncio
 
 app = FastAPI()
 
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 def getCpuTimesPercents():
     cpuTimesPercent = psutil.cpu_times_percent()
-    return {'userTimePercent': cpuTimesPercent[0], 'systemTimePercent': cpuTimesPercent[1], 'idleTimePercent': cpuTimesPercent[2]}
+    return {'user': cpuTimesPercent[0], 'system': cpuTimesPercent[1], 'idle': cpuTimesPercent[2]}
 
 def getCpuNumber():
     return {'logical': psutil.cpu_count(), 'physical': psutil.cpu_count(logical=False)}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+    <head>
+        <title>web-monitor</title>
+        <meta charset="UTF-8">
+    </head>
+    <div id="app">
+        <h1>web-monitor</h1>
+        <div v-if="startRequest">
+            <div>
+                <h2>os</h2>
+                <div>
+                    <a><b>platform</b> : {{ staticValue.os.platform }}</a><br />
+                    <a><b>networkName</b> : {{ staticValue.os.networkName }}</a><br />
+                    <a><b>system</b> : {{ staticValue.os.system }}</a><br />
+                    <a><b>version</b> : {{ staticValue.os.version }}</a><br />
+                    <a><b>architecture</b> : {{ staticValue.os.architecture }}</a><br />
+                    <a><b>bootTime</b> : {{ staticValue.os.bootTime }}</a><br />
+                </div>
+            </div>
+            <hr>
+            <div>
+                <h2>processor</h2>
+                <div>
+                    <a><b>name</b> : {{ staticValue.processor.name }}</a><br />
+                    <a><b>instructionSet</b> : {{ staticValue.processor.instructionSet }}</a><br />
+                    <h3>cpuNumber</h3>
+                    <div>
+                        <a><b>logical</b> : {{ staticValue.processor.cpuNumber.logical }}</a><br />
+                        <a><b>physical</b> : {{ staticValue.processor.cpuNumber.physical }}</a><br />
+                    </div>
+                    <h3>cpuTimesPercents</h3>
+                    <div>
+                        <a><b>user</b> : {{ dynamicValue.processor.cpuTimesPercents.user }}</a><br />
+                        <a><b>system</b> : {{ dynamicValue.processor.cpuTimesPercents.system }}</a><br />
+                        <a><b>idle</b> : {{ dynamicValue.processor.cpuTimesPercents.idle }}</a>
+                    </div>
+                    <h3>cpuFrequence</h3>
+                    <div>
+                        <a><b>cpuFrequence</b> : {{ dynamicValue.processor.cpuFrequence }}</a><br />
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <h2>memory</h2>
+                <div>
+                    <h3>virtualMemory</h3>
+                    <div>
+                        <a><b>total</b> : {{ dynamicValue.memory.virtualMemory.total }}</a><br />
+                        <a><b>available</b> : {{ dynamicValue.memory.virtualMemory.available }}</a><br />
+                        <a><b>used</b> : {{ dynamicValue.memory.virtualMemory.used }}</a><br />
+                        <a><b>free</b> : {{ dynamicValue.memory.virtualMemory.free }}</a><br />
+                    </div>
+                </div>
+                <div>
+                    <h3>swapMemory</h3>
+                    <div>
+                        <a><b>total</b> : {{ dynamicValue.memory.swapMemory.total }}</a><br />
+                        <a><b>used</b> : {{ dynamicValue.memory.swapMemory.used }}</a><br />
+                        <a><b>free</b> : {{ dynamicValue.memory.swapMemory.free }}</a><br />
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <h2>diskUsage</h2>
+                <div>
+                    <div v-for="(usage, disk) in dynamicValue.diskUsage">
+                        <h3>{{ disk }}</h3>
+                        <div>
+                            <a><b>total</b> : {{ usage.total }}</a><br />
+                            <a><b>used</b> : {{ usage.used }}</a><br />
+                            <a><b>free</b> : {{ usage.free }}</a><br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <h2>network</h2>
+                <a><b>hostname</b> : {{ staticValue.network.hostname }}</a><br />
+                <a><b>ip</b> : {{ staticValue.network.ip }}</a><br />
+                <div>
+                    <h3>networkUsage</h3>
+                    <a><b>bytesSent</b> : {{ dynamicValue.networkUsage.bytesSent }}</a><br />
+                    <a><b>bytesReceive</b> : {{ dynamicValue.networkUsage.bytesReceive }}</a><br />
+                    <a><b>packetsSent</b> : {{ dynamicValue.networkUsage.packetsSent }}</a><br />
+                    <a><b>packetsReceive</b> : {{ dynamicValue.networkUsage.packetsReceive }}</a><br />
+                </div>
+            </div>
+            <hr>
+            <h2>users</h2>
+            <div>
+                <ul>
+                    <li v-for="user in dynamicValue.users">{{ user }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="vue.js"></script>
+    <script src="axios.min.js"></script>
+    <script src="main.js"></script>
+</html>
