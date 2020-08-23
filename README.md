@@ -4,13 +4,13 @@ Little discovery project : a web application to display computer informations (C
 
 ## Description
 
-The front-end and back-end communicate via HTTP and websocket. Static information (platform, number of CPU cores... etc) is sent via HTTP when the web application opens. Dynamic information (RAM, CPU times... etc) is sent continuously via websocket.  
+The front-end and back-end communicate via HTTP and websocket. Static information (platform, number of CPU cores... etc) is sent via HTTP when the web application opens. Dynamic information (RAM, CPU times... etc) is sent continuously via websocket. 
 
-  
+<br/><br/>
 
 ![capture](capture_front.gif)
 
-  
+<br/><br/>
 
 Screenshot with the top of the page only.
 
