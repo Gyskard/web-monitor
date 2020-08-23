@@ -1,18 +1,18 @@
 # web-monitor
 
-## conceptualization
+Little discovery project : a web application to display computer informations (CPU, RAM, OS...).
 
-### purpose
+## Description
 
-Monitor computer performance from a web interface.
+The front-end and back-end communicate via HTTP and websocket. Static information (platform, number of CPU cores... etc) is sent via HTTP when the web application opens. Dynamic information (RAM, CPU times... etc) is sent continuously via websocket.  
 
-### Getting started
+## Getting started
 
 #### Prerequisites
 * Python 3.8
 * pip
 
-#### Installing
+#### Installation
 
 ```
 git clone https://github.com/Gyskard/web-monitor
